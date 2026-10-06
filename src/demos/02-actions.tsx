@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { ServerSentEventGenerator } from '@starfederation/datastar-sdk/web';
-import { Demo, LessonIntro } from '../components';
+import { Demo, LessonIntro, type Snippet } from '../components';
 import { signals, sleep } from '../lib/signals';
 import { lesson } from './index';
 
@@ -139,6 +139,77 @@ function StatusResult({ status }: { status: number }) {
   );
 }
 
+const CODE: Record<string, Snippet[]> = {
+  click_to_edit: [
+    {
+      label: 'HTML on the page',
+      code: `
+        <div id="contact">
+          <dl>…Ada Lovelace…</dl>
+          <button data-on:click="@get('/lessons/actions/contact/edit')">Edit</button>
+        </div>`,
+      marks: ['id="contact"', "@get('/lessons/actions/contact/edit')"],
+    },
+    {
+      label: 'Server (Hono) — every version of the fragment keeps id="contact"',
+      code: `
+        actionsDemo.get('/contact/edit', (c) => c.html(<ContactEdit value={contact} />));
+
+        // <ContactEdit> renders:
+        // <div id="contact">
+        //   <form data-on:submit="@post('/lessons/actions/contact', {contentType: 'form'})"
+        //         data-indicator="contactSaving"> …
+        //     <button type="submit" data-attr:disabled="$contactSaving">Save</button>`,
+      marks: ['c.html', 'id="contact"', "{contentType: 'form'}", 'data-indicator="contactSaving"'],
+    },
+  ],
+  validation: [
+    {
+      label: 'HTML',
+      code: `
+        <form data-signals='{"signupName": "", "signupEmail": ""}'
+              data-on:submit="@post('/lessons/actions/validate')"
+              data-indicator="validateSending">
+          <input data-bind="signupName"> <input data-bind="signupEmail">
+          <button type="submit" data-attr:disabled="$validateSending">Sign up</button>
+        </form>
+        <div id="validate-result"></div>`,
+      marks: ["@post('/lessons/actions/validate')", 'data-indicator="validateSending"', 'id="validate-result"'],
+    },
+    {
+      label: 'Server (Hono)',
+      code: `
+        const read = await ServerSentEventGenerator.readSignals(c.req.raw); // the JSON body
+        const errors = validate(read.signals);
+        return c.html(<ValidateResult errors={errors} />);   // <div id="validate-result">, status 200`,
+      marks: ['readSignals(c.req.raw)', 'c.html'],
+    },
+  ],
+  status: [
+    {
+      label: 'Server (Hono)',
+      code: `
+        actionsDemo.post('/status/:code', (c) => {
+          const status = c.req.param('code') === '422' ? 422 : 200;
+          return c.html(<StatusResult status={status} />, status); // same HTML, different status
+        });`,
+      marks: ['422 : 200', ', status)'],
+    },
+  ],
+  chain: [
+    {
+      label: 'HTML the server sends (attribute ORDER is the bug)',
+      code: `
+        <div data-signals='{"chainBase": 10}'
+             data-computed:chain-early="$chainDoubled * 2"     ← reads a computed declared below
+             data-computed:chain-doubled="$chainBase * 2"
+             data-computed:chain-ordered="$chainDoubled * 2"   ← declared after: fine
+             data-computed:chain-inline="$chainBase * 4">      ← base signals only: always fine`,
+      marks: ['data-computed:chain-early', 'data-computed:chain-doubled', 'data-computed:chain-inline'],
+    },
+  ],
+};
+
 // ---------- Page ----------
 
 export const actionsDemo = new Hono();
@@ -154,6 +225,7 @@ actionsDemo.get('/', (c) =>
 
       <Demo
         id="click-to-edit"
+        code={CODE.click_to_edit}
         title="1. Click to edit"
         shows={'Edit, Save and Cancel each fetch a fragment with id="contact". The page never navigates.'}
       >
@@ -162,6 +234,7 @@ actionsDemo.get('/', (c) =>
 
       <Demo
         id="validation"
+        code={CODE.validation}
         title="2. Inline validation"
         shows="@post sends the page's signals as JSON. The server validates and replies with a fragment for #validate-result."
       >
@@ -192,6 +265,7 @@ actionsDemo.get('/', (c) =>
 
       <Demo
         id="status"
+        code={CODE.status}
         title="3. Break it: 200 vs 422"
         shows="Both buttons get the SAME fragment back. Only the status code differs."
       >
@@ -206,6 +280,7 @@ actionsDemo.get('/', (c) =>
 
       <Demo
         id="chain"
+        code={CODE.chain}
         title="4. Gotcha: computed order in patched HTML"
         shows="A computed that reads a computed declared AFTER it gets stuck — but only when the HTML arrives in a patch. Fine on first load, broken here."
       >

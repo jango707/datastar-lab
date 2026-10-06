@@ -56,6 +56,8 @@ export const renderer = jsxRenderer(
             <pre data-json-signals></pre>
           </aside>
         </div>
+        {/* Lesson 4: the server appends error toasts here (dsError in src/lib/datastar.tsx). */}
+        <div id="toasts" class="toasts" aria-live="polite"></div>
       </body>
     </html>
   ),

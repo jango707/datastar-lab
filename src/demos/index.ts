@@ -7,13 +7,14 @@ export type LessonMeta = {
 
 /** The learning path. Flip `ready` when a lesson's file lands in this folder. */
 export const LESSONS: LessonMeta[] = [
+  { n: 0, slug: 'under-the-hood', title: 'Under the hood', ready: true },
   { n: 1, slug: 'signals', title: 'Signals (no server)', ready: true },
   { n: 2, slug: 'actions', title: 'Actions + swap by id', ready: true },
-  { n: 3, slug: 'server-signals', title: 'Server reads signals', ready: false },
-  { n: 4, slug: 'navigation-errors', title: 'Navigation, errors, double-submit', ready: false },
-  { n: 5, slug: 'streaming', title: 'Streaming', ready: false },
-  { n: 6, slug: 'live', title: 'Live updates', ready: false },
-  { n: 7, slug: 'islands', title: 'Where Datastar stops', ready: false },
+  { n: 3, slug: 'server-signals', title: 'Server reads signals', ready: true },
+  { n: 4, slug: 'navigation-errors', title: 'Navigation, errors, double-submit', ready: true },
+  { n: 5, slug: 'streaming', title: 'Streaming', ready: true },
+  { n: 6, slug: 'live', title: 'Live updates', ready: true },
+  { n: 7, slug: 'islands', title: 'Where Datastar stops', ready: true },
 ];
 
 export const lesson = (slug: string): LessonMeta => {

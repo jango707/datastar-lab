@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { Demo, LessonIntro } from '../components';
+import { Demo, LessonIntro, type Snippet } from '../components';
 import { signals } from '../lib/signals';
 import { lesson } from './index';
 
@@ -16,6 +16,83 @@ import { lesson } from './index';
 
 const meta = lesson('signals');
 
+const CODE: Record<string, Snippet[]> = {
+  counter: [
+    {
+      label: 'HTML',
+      code: `
+        <div data-signals='{"count": 0}'>
+          <p data-text="$count" data-class:neg="$count < 0">0</p>
+          <button data-on:click="$count--">−1</button>
+          <button data-on:click="$count++">+1</button>
+          <button data-on:click="$count = 0"
+                  data-attr:disabled="$count === 0">Reset</button>
+        </div>`,
+      marks: ['data-signals', 'data-text', 'data-class:neg', 'data-on:click', 'data-attr:disabled'],
+    },
+  ],
+  toggle: [
+    {
+      label: 'HTML',
+      code: `
+        <button data-on:click="$open = !$open"
+                data-attr:aria-expanded="$open ? 'true' : 'false'"
+                data-text="$open ? 'Hide details' : 'Show details'">Show details</button>
+        <div data-show="$open" style="display:none">…</div>`,
+      marks: ['data-show="$open"', 'style="display:none"', "$open ? 'true' : 'false'"],
+    },
+  ],
+  preview: [
+    {
+      label: 'HTML',
+      code: `
+        <div data-signals='{"name": "", "email": "", "role": "learner"}'
+             data-computed:email-ok="/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test($email)">
+          <input data-bind="name">
+          <input data-bind="email">
+          <select data-bind="role">…</select>
+          <strong data-text="$name.trim() || 'stranger'">stranger</strong>
+          <span data-text="$emailOk ? '✓ looks like an email' : '✗ not an email yet'"></span>
+        </div>`,
+      marks: ['data-bind', 'data-computed:email-ok', '$emailOk'],
+    },
+  ],
+  totals: [
+    {
+      label: 'HTML',
+      code: `
+        <div data-signals='{"qty": 2, "price": 15}'
+             data-computed:subtotal="$qty * $price">
+          <input type="number" data-bind="qty">
+          <input type="number" data-bind="price">
+          <dd data-text="'£' + $subtotal.toFixed(2)">£30.00</dd>
+        </div>`,
+      marks: ['data-computed:subtotal', '$subtotal', '"qty": 2'],
+    },
+  ],
+  gotcha_case: [
+    {
+      label: 'HTML (what you write → what the browser keeps)',
+      code: `
+        <input data-bind:userName="">   <!-- parsed as data-bind:username → binds $username ✗ -->
+        <input data-bind="userName">    <!-- value form keeps the capital → binds $userName ✓ -->`,
+      marks: ['data-bind:userName=""', 'data-bind="userName"'],
+    },
+  ],
+  gotcha_class: [
+    {
+      label: 'HTML',
+      code: `
+        <!-- ✗ both classes end up on the element; the stylesheet order decides -->
+        <div class="swatch gc-muted" data-class:gc-accent="$gcPicked">…</div>
+
+        <!-- ✓ swap them: exactly one is ever applied -->
+        <div class="swatch" data-class="{'gc-accent': $gcPicked, 'gc-muted': !$gcPicked}">…</div>`,
+      marks: ['class="swatch gc-muted"', "data-class=\"{'gc-accent': $gcPicked, 'gc-muted': !$gcPicked}\""],
+    },
+  ],
+};
+
 export const signalsDemo = new Hono();
 
 signalsDemo.get('/', (c) =>
@@ -29,6 +106,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="counter"
+        code={CODE.counter}
         title="1. Counter"
         shows="data-signals declares state; data-on:click changes it; data-text and data-class react to it."
       >
@@ -48,6 +126,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="toggle"
+        code={CODE.toggle}
         title="2. Toggle panel"
         shows={'data-show hides and shows an element. It starts with style="display:none" so it never flashes before Datastar loads.'}
       >
@@ -68,6 +147,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="preview"
+        code={CODE.preview}
         title="3. Live preview (two-way binding)"
         shows="data-bind keeps an input and a signal in sync both ways; data-computed derives a read-only signal."
       >
@@ -108,6 +188,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="totals"
+        code={CODE.totals}
         title="4. Computed totals"
         shows="A computed signal recalculates whenever a signal it reads changes. No event wiring needed."
       >
@@ -137,6 +218,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="gotcha-case"
+        code={CODE.gotcha_case}
         title="5. HTML lowercases attribute names"
         shows="data-bind:userName reaches the browser as data-bind:username, so it binds the WRONG signal. Use the value form."
       >
@@ -158,6 +240,7 @@ signalsDemo.get('/', (c) =>
 
       <Demo
         id="gotcha-class"
+        code={CODE.gotcha_class}
         title="6. A toggled class doesn't beat a static one"
         shows="When both classes set the same property, the stylesheet order decides — not the signal. Toggle both classes exclusively instead."
       >
