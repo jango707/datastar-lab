@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+
+# Personal / tooling files — never published (see AGENTS.md → "Never commit")
+*.local.md
+contracts/
+.claude/skills/datastar/

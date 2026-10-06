@@ -1,0 +1,230 @@
+/* Datastar Lab — deliberately plain CSS (no Tailwind) so the lessons isolate Datastar.
+   Theme: "Candy pop", light only. */
+
+:root {
+  /* Surfaces & text */
+  --bg: #fff8ec;           /* cream page */
+  --surface: #ffffff;      /* cards */
+  --ink: #2a2140;          /* deep plum text */
+  --muted: #6f6789;
+  --line: #e7deef;         /* soft card borders */
+  --line-strong: #9a8fb0;  /* input/button borders (≥3:1 on white) */
+  --code-bg: #f6f0ff;
+
+  /* Brand */
+  --accent: #7c3aed;       /* violet primary */
+  --accent-soft: #efe6ff;
+  --pink: #ff4f9a;
+  --pink-ink: #c2185b;     /* pink for small text */
+  --sunshine: #ffc93c;
+  --sunshine-soft: #fff3cc;
+  --mint: #12b886;
+  --sky: #3b82f6;
+
+  /* Status (text-safe shades of mint / tomato) */
+  --ok: #0b7a55;
+  --ok-soft: #ddf7ec;
+  --error: #c92a2f;
+  --error-soft: #ffe5e5;
+
+  --radius: 14px;
+  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 var(--font);
+}
+
+code, pre { font-family: var(--mono); font-size: 0.875em; }
+code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 5px; }
+pre { background: var(--code-bg); padding: 12px; border-radius: 10px; overflow-x: auto; margin: 0; }
+
+a { color: var(--accent); }
+
+/* ---- Shell: nav | lesson | signals inspector ---- */
+
+.shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
+.nav {
+  padding: 16px;
+  border-bottom: 2px solid var(--line);
+  background: var(--surface);
+}
+.nav-title { font-weight: 800; margin: 0 0 10px; font-size: 1.1rem; }
+.nav-title a { color: var(--accent); text-decoration: none; }
+.nav ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.nav li > a, .nav li > span {
+  display: block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.nav li a { color: var(--ink); }
+.nav li a:hover { background: var(--accent-soft); }
+.nav li a[aria-current="page"] { background: var(--accent); color: #fff; font-weight: 700; }
+.nav li > span { color: var(--muted); }
+.nav .soon {
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--sunshine-soft);
+  color: var(--ink);
+}
+
+.main { padding: 24px 16px 48px; min-width: 0; }
+.main > * { max-width: 760px; }
+
+.inspector { padding: 0 16px 32px; }
+.inspector h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pink-ink); margin: 0 0 8px; }
+.inspector pre { font-size: 0.8rem; white-space: pre-wrap; word-break: break-word; border: 2px dashed var(--line); }
+
+@media (min-width: 768px) {
+  .shell { grid-template-columns: 220px minmax(0, 1fr); }
+  .nav { border-bottom: 0; border-right: 2px solid var(--line); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .nav ol { flex-direction: column; flex-wrap: nowrap; }
+  .main { padding: 32px 40px 64px; }
+  .inspector { grid-column: 2; padding: 0 40px 48px; }
+}
+
+@media (min-width: 1280px) {
+  .shell { grid-template-columns: 220px minmax(0, 1fr) 320px; }
+  .inspector {
+    grid-column: 3;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 32px 16px;
+    border-left: 2px solid var(--line);
+    background: var(--surface);
+  }
+}
+
+/* ---- Lesson page frame ---- */
+
+.eyebrow {
+  color: var(--pink-ink);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+h1 {
+  margin: 4px 0 10px;
+  font-size: 1.9rem;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-color: var(--sunshine);
+  text-decoration-thickness: 0.28em;
+  text-underline-offset: 0.06em;
+  text-decoration-skip-ink: none;
+}
+.intro { color: var(--muted); margin: 0 0 24px; }
+h2.section { margin: 40px 0 8px; font-size: 1.2rem; }
+
+.demo {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-top: 6px solid var(--pink);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 18px 0;
+}
+.demo:nth-of-type(4n + 2) { border-top-color: var(--sunshine); }
+.demo:nth-of-type(4n + 3) { border-top-color: var(--mint); }
+.demo:nth-of-type(4n + 4) { border-top-color: var(--sky); }
+.demo h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.demo .demo-note { color: var(--muted); font-size: 0.9rem; margin: 0 0 16px; }
+
+/* ---- Controls ---- */
+
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.stack { display: grid; gap: 12px; }
+.split { display: grid; gap: 16px; }
+@media (min-width: 640px) { .split { grid-template-columns: 1fr 1fr; } }
+
+button {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+button:hover { background: var(--accent-soft); border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.primary:hover { background: #6a2bd6; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 3px solid var(--sunshine);
+  outline-offset: 2px;
+}
+
+label { display: grid; gap: 4px; font-size: 0.9rem; font-weight: 600; }
+input, select {
+  font: inherit;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  width: 100%;
+  min-width: 0;
+}
+
+.big { font-size: 2.75rem; font-weight: 800; margin: 0 0 12px; font-variant-numeric: tabular-nums; color: var(--accent); }
+.neg { color: var(--error); }
+.panel { margin-top: 12px; padding: 12px; border-radius: 10px; background: var(--accent-soft); }
+.preview { padding: 12px; border-radius: 10px; background: var(--sunshine-soft); overflow-wrap: anywhere; }
+.preview p { margin: 4px 0; }
+.totals { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 4px 24px; margin: 12px 0 0; font-variant-numeric: tabular-nums; }
+.totals dt { color: var(--muted); }
+.totals dd { margin: 0; font-weight: 700; }
+.readout { font-size: 0.9rem; margin: 8px 0 0; overflow-wrap: anywhere; }
+
+.label-broken, .label-fixed {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1px 7px;
+  border-radius: 999px;
+  justify-self: start; /* inside a grid <label>, don't stretch to full width */
+}
+.label-broken { color: var(--error); background: var(--error-soft); }
+.label-fixed { color: var(--ok); background: var(--ok-soft); }
+
+.result { margin-top: 12px; padding: 12px; border-radius: 10px; background: var(--bg); overflow-wrap: anywhere; }
+.result.error { background: var(--error-soft); color: var(--error); }
+.result.ok { background: var(--ok-soft); color: var(--ok); }
+.result ul { margin: 4px 0 0; padding-left: 20px; }
+.result pre { margin-top: 8px; color: var(--ink); background: var(--surface); }
+
+.contact dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0 0 12px; }
+.contact dt { color: var(--muted); }
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+
+/* ---- Lesson 1 gotcha: class conflict ----
+   ORDER MATTERS HERE ON PURPOSE. `.gc-muted` is declared AFTER `.gc-accent`, so when an
+   element carries both, muted wins the cascade no matter what the signal says. */
+.swatch { padding: 12px; border-radius: 10px; border: 3px solid transparent; background: var(--bg); }
+.gc-accent { border-color: var(--accent); }
+.gc-muted { border-color: var(--line); }
