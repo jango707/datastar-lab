@@ -33,18 +33,18 @@ A Datastar v1 learning lab. One Hono app; one page per lesson (0–7); each demo
 6. `README.md` lessons table row.
 
 ## Demo conventions
-- Wrap each demo in `<Demo id title shows code>`. `shows` = one-sentence takeaway.
+- Wrap each demo in `<Demo id title shows code>`. `shows` = one-sentence takeaway. (Exception: Lesson 0's four-box diagram renders its own markup plus a standalone `<CodeBits>` in `<section class="demo" id="hood-code">`.)
 - Signal names must be unique across a page (one global store). Prefix per demo (`chainBase`, `hoodName`). Browser-only bookkeeping starts with `_`.
 - Seed signals with `signals({...})` (`src/lib/signals.ts`). Seed arrays at full length: reading `$arr[i]` past the end creates `""` entries.
-- Every `data-show` element starts with `style="display:none"`.
+- Every `data-show` element that should start hidden gets `style="display:none"` (ones meant to be visible on first load, like L3's "Nothing rolled yet.", omit it).
 - JSX can't put `.` in attribute names: write modifiers as a spread, `{...{ 'data-on:input__debounce.300ms': '…' }}`.
 - Valueless key-form attributes need `=""` (Hono renders bare ones as `="true"`).
 - Mutating/validating actions sleep a little so in-flight states are visible.
 - Expected errors return **200** + an error fragment. Unexpected errors: throw, and `app.onError` → `dsError` (toast + release `KNOWN_BUSY_SIGNALS`). Add any new hand-rolled `*Busy` signal to `KNOWN_BUSY_SIGNALS`.
 - `data-indicator` goes on the element whose `data-on:*`/`data-init` fires the fetch, and **before** `data-init` in attribute order.
-- Streams: always end by releasing busy signals; long-lived streams need `keepalive: true`, cleanup in `onAbort`, `onError: () => {}` (writes after a disconnect throw), and a `_heartbeat` patch every ≤ 5s (Bun drops idle connections after 10s).
+- Streams: always end by releasing busy signals. Long-lived streams need `keepalive: true`, timer/subscriber cleanup in `onAbort` (that's the guard for timers: writes after a disconnect throw, and `onError` only sees errors thrown by the start function or the promise it returns), and a `_heartbeat` patch every ≤ 5s (Bun drops idle connections after 10s). Awaited-loop streams (L5) also pass `onError: () => {}` so a write after an abort doesn't rethrow.
 - Islands: no globals. Datastar → island via `data-attr:data-*` (read or `MutationObserver`); island → Datastar via `CustomEvent` caught by `data-on:<event>`.
-- A deliberately broken example is labelled `<span class="label-broken">` and paired with a fixed one where possible. **Never "fix" these:**
+- A deliberately broken example is labelled `<span class="label-broken">` (or, for L2 demo 3, by its "Break it:" title) and paired with a fixed one where possible. **Never "fix" these:**
   - L1 demo 5 `data-bind:userName=""`; L1 demo 6 `.swatch.gc-muted` + `data-class:gc-accent` (`.gc-muted` must stay AFTER `.gc-accent` in `lab.css`)
   - L2 demo 3 the 422 route; L2 demo 4 `chain-early` declared before `chain-doubled`
   - L4 the 302 route, the `/explode/naive` 500, the unguarded Send button

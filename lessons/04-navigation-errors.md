@@ -46,7 +46,7 @@ return c.redirect('/lessons/navigation-errors?created=7', 302);
 
 **Breakdown:**
 - **text/javascript** and **executeScript** both cause a real navigation: the page reloads, the address bar changes, and the two readouts agree.
-- **302** is the trap. `fetch()` follows redirects silently, so Datastar receives the *target page's HTML* and **morphs it into the current page**. The "Created note" banner appears and it *looks* like it worked, but the address bar never changed, so the two readouts disagree. Press reload and the banner is gone. Bookmarks, back and refresh are now all lying to the user.
+- **302** is the trap. `fetch()` follows redirects silently, so Datastar receives the *target page's HTML* and **morphs it into the current page**. The "Created note" banner appears and it *looks* like it worked, but the address bar never changed, so the two readouts disagree. Press reload and the 302's banner is gone (on a clean URL there's no banner at all; after an earlier real navigation you'll see *that* note instead), because `?created=…&via=302` never reached the address bar. Bookmarks, back and refresh are now all lying to the user.
 - The lab wraps the good version as `dsRedirect(c, url)` in `src/lib/datastar.tsx`.
 
 ## Step 2 — Errors you can see
@@ -100,7 +100,7 @@ Click **Send (unguarded)** three times quickly, then wait. Click **Reset**, then
 
 Change **one thing**, refresh, observe, undo.
 
-1. **Reload after the 302.** Click the 302 button, then press the browser's reload. → The banner disappears: the URL never contained `?created=`.
+1. **Reload after the 302.** Open <http://localhost:4321/lessons/navigation-errors> with no query string, click the 302 button, then press the browser's reload. → The banner disappears: the address bar never contained `?created=`.
 2. **Answer the error yourself.** In `/explode/handled`, replace `throw new Error(...)` with `return c.json({ error: 'nope' }, 500)`. → The fixed column now behaves like the broken one: no toast, stuck button.
 3. **Remove the guard.** Delete `data-indicator="sendingEmail"` from the guarded button. → Three quick clicks now send 3 emails.
 4. **Delete the error handler.** Remove the `app.onError(...)` block from `src/server.tsx`. → The fixed column breaks too: Hono's default 500 is ignored by Datastar.

@@ -86,7 +86,7 @@ new MutationObserver(clear).observe(canvas,                 // react to Clear
 
 Change **one thing**, refresh, observe, undo.
 
-1. **Unplug the island.** Delete the `<script type="module" src="/islands/paint.js">` line. → Drawing does nothing. Everything else (colours, slider, Save) still works, because those parts are pure Datastar.
+1. **Unplug the island.** Delete the `<script type="module" src="/islands/paint.js">` line. → Drawing does nothing. The colour buttons, the slider and Clear still change their signals (watch the inspector), because those parts are pure Datastar. Save stays disabled, though: nothing reports pixels any more, so `$pixelCount` never leaves 0.
 2. **Cut the Datastar → island wire.** In `src/islands/paint.ts`, delete the `new MutationObserver(...)` line. → **Clear** does nothing visible. `$clearToken` still goes up (watch the inspector), but the island isn't watching any more, so the canvas and the counts stay as they are.
 3. **Cut the island → Datastar wire.** Rename the event in the island to `'paint-changed'`. → You can draw, but the stroke and pixel counts stay at 0 and Save stays disabled.
 4. **Hide the timer id.** Rename the broken stopwatch's `swTimer` to `_swTimer` (in `data-signals` and the expression). → It no longer travels to the server, which is better. It's still a program in an attribute, though.

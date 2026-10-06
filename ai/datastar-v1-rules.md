@@ -43,7 +43,7 @@ Each row was reproduced in a browser on a freshly started server. "Proof" = wher
 | Non-2xx responses are not applied | Return expected errors as 200 + fragment | L2 demo 3 |
 | Fragment whose top-level id has no match (or a `removeElements` selector with no match): nothing applied, console warns `PatchElementsNoTargetsFound` | Keep every version of a fragment on the same id | L2/L3 Break it, L0 Break it #2 |
 | `data-indicator` only tracks fetches fired by its own element; on initial load it stays `true` for the whole life of a long-lived `data-init` stream | Put it on the `<form>` for submit; use it as a "connected" light | L2 Break it #2, L6 demo 2 |
-| `@get` sends signals as `?datastar=<json>`; other methods as JSON body; signals matching `/(^_\|\._)/` are never sent; indicator signals are sent | Prefix browser-only state with `_` | L0 box ②, L2 demo 2 |
+| `@get` and `@delete` send signals as `?datastar=<json>`; `@post`/`@put`/`@patch` send a JSON body (`readSignals` handles both; the DELETE half is from client + SDK source, not a browser repro); signals matching `/(^_\|\._)/` are never sent; indicator signals are sent | Prefix browser-only state with `_` | L0 box ②, L2 demo 2 |
 | Signals persist after the element that declared them is removed | Don't rely on removal to reset state | L2 network log |
 | `{contentType: 'form'}` sends the closest form's fields, no signals | `c.req.parseBody()` on the server | L2 demo 1, Break it #4 |
 | SSE: one response may mix any number of `patchElements` / `patchSignals` events; each is applied on arrival | Stream "fat" patches (whole element, same id) | L0, L3, L5 |

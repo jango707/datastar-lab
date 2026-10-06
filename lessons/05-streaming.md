@@ -81,7 +81,7 @@ return ServerSentEventGenerator.stream(async (sse) => {
 ```
 
 **Breakdown:**
-- This stream sends **no HTML at all**, just 20 signal patches. `data-style:width` turns `$progress` into a CSS width, and `data-text` shows the status.
+- This stream sends **no HTML at all**, just signal patches: one that resets the bar to 0, then 20 progress updates (5% → 100%). `data-style:width` turns `$progress` into a CSS width, and `data-text` shows the status.
 
 ## Step 4 — Restart mid-way
 
@@ -99,7 +99,7 @@ Start the job, and while it's running click **Restart job**.
 Change **one thing** in [`src/demos/05-streaming.tsx`](../src/demos/05-streaming.tsx), refresh, observe, undo.
 
 1. **Forget to un-busy.** Delete the final `sse.patchSignals(JSON.stringify({ chatBusy: false }))`. → After one reply the input stays disabled for good.
-2. **Leave the typing indicator.** Delete the `sse.removeElements(...)` line. → "Bot is typing…" stays under every finished reply.
+2. **Leave the typing indicator.** Delete the `sse.removeElements(...)` line. → "Bot is typing…" stays in the thread above every finished reply, between your message and the bot's answer (one leftover per turn).
 3. **Ignore aborts.** Remove the `onAbort` option. → Restarting no longer increases "streams the server saw aborted".
 4. **Slow it down.** Change `await sleep(70)` to `await sleep(400)`. → The reply crawls in one word at a time, and the `chat` request in Network stays pending until the last word.
 

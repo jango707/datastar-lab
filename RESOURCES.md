@@ -18,7 +18,7 @@ Read these in order. Each one is short.
 | [Getting started](https://data-star.dev/guide/getting_started) | Lesson 0 |
 | [Reactive signals](https://data-star.dev/guide/reactive_signals) | Lesson 1 |
 | [Datastar expressions](https://data-star.dev/guide/datastar_expressions) | Lesson 1 |
-| [Backend requests](https://data-star.dev/guide/backend_requests) | Lessons 0, 2–6 |
+| [Backend requests](https://data-star.dev/guide/backend_requests) | Lessons 0, 2–7 |
 | [The Tao of Datastar](https://data-star.dev/guide/the_tao_of_datastar) | After Lesson 2, when the "server owns the HTML" idea has clicked |
 
 ### Look things up: the reference
@@ -33,7 +33,7 @@ Read these in order. Each one is short.
 
 ### See it done: examples and how-tos
 
-- [Examples](https://data-star.dev/examples): small, complete patterns. Several match this lab's demos: [click to edit](https://data-star.dev/examples/click_to_edit) and [inline validation](https://data-star.dev/examples/inline_validation) (Lesson 2), [active search](https://data-star.dev/examples/active_search) (Lesson 3), [infinite scroll](https://data-star.dev/examples/infinite_scroll) and [bulk update](https://data-star.dev/examples/bulk_update).
+- [Examples](https://data-star.dev/examples): small, complete patterns. Several match this lab's demos: [click to edit](https://data-star.dev/examples/click_to_edit) and [inline validation](https://data-star.dev/examples/inline_validation) (Lesson 2), [active search](https://data-star.dev/examples/active_search) (Lesson 3). Not covered here but worth a look next: [infinite scroll](https://data-star.dev/examples/infinite_scroll) and [bulk update](https://data-star.dev/examples/bulk_update).
 - [How-tos](https://data-star.dev/how_tos): task-focused recipes.
 - [Essays](https://data-star.dev/essays) and [videos](https://data-star.dev/videos): the reasoning behind the design.
 
@@ -64,9 +64,9 @@ The console errors link straight to an explanation page, for example:
 
 Each of these explains a "why" behind one of the gotchas:
 
-- [Using server-sent events (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events): the transport behind Lessons 3–6
+- [Using server-sent events (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events): the transport behind Lessons 0 and 3–6
 - [Using data attributes (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/How_to/Use_data_attributes)
-- [HTML spec: attribute names are lowercased while parsing](https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inattrname): the reason behind Lesson 1, Step 6
+- [HTML spec: attribute names are lowercased while parsing](https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state:uppercase-ascii-letters): the reason behind Lesson 1, Step 6
 - [The CSS cascade (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade): the reason behind Lesson 1, Step 7
 - [`aria-expanded` (MDN)](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-expanded): the reason behind Lesson 1, *Break it #3*
 - [HTTP status codes (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status): background for Lesson 2, Step 4

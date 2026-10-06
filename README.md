@@ -55,7 +55,7 @@ bun run typecheck   # type-check everything
 
 1. **Open the lesson page** in the browser. Every demo has a **Code** panel underneath it, a short excerpt with the important parts highlighted, and every page has a **Live signals** panel showing the page's state as JSON.
 2. **Follow the walkthrough** in [`lessons/`](lessons/). It goes step by step: what to click, what each attribute does, and what to notice.
-3. **Break it.** Each walkthrough ends with exercises that change one thing in `src/demos/NN-*.tsx` and tell you what you should see.
+3. **Break it.** Each walkthrough ends with exercises that change one thing (usually in `src/demos/NN-*.tsx`; a few touch `src/server.tsx` or `src/islands/paint.ts`) and tell you what you should see.
 4. **Check yourself** with the short questions at the end of each walkthrough.
 
 Every gotcha in these lessons was **reproduced in a real browser** against the bundled Datastar 1.0.2 client. Where the official docs and this lab differ, the lab says so.

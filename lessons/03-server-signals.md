@@ -101,7 +101,7 @@ data: signals {"resultCount":5}
 Change **one thing** in [`src/demos/03-server-signals.tsx`](../src/demos/03-server-signals.tsx), refresh, observe, undo.
 
 1. **Remove the debounce.** Change `data-on:input__debounce.300ms` to `data-on:input`. → Type `script` and Network shows a request **per keystroke**.
-2. **Read a signal that isn't there.** Change the dice seed back to `dice: []` and the dice to `data-show={`$dice.length > ${i}`}`. → Before you've rolled, `$dice` has become `["","","","",""]` and five empty dice are showing. **Reading a missing signal path creates it as `""`.** `data-text="$dice[4]"` padded the array. The padded array is also sent to the server with every request (look at the `?datastar=` parameter in Network).
+2. **Read a signal that isn't there.** Change the dice seed back to `dice: []` and the dice to `data-show={`$dice.length > ${i}`}`. → Before you've rolled, `$dice` has become `["","","","",""]` and five empty dice are showing. **Reading a missing signal path creates it as `""`.** `data-text="$dice[4]"` padded the array. The padded array is also sent to the server with every request (type in the search box and look at the `?datastar=` query parameter, or click **Roll** and open that POST request's payload: the same JSON is in the body).
 3. **Forget the id.** In `Results`, remove `id="search-results"`. → Searching updates the count but never the list, and the console warns `PatchElementsNoTargetsFound`.
 4. **Remove from an empty list.** Click **Remove first** until the list is empty, then once more. → Nothing happens on the page, and the console warns `PatchElementsNoTargetsFound`. A remove with no match isn't an error the user sees.
 

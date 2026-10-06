@@ -90,7 +90,7 @@ Open DevTools → **Network**, filtered to *Fetch/XHR*, so you can watch each ac
 
 ## Step 4 — Break it on purpose: 200 vs 422
 
-Both buttons get **exactly the same HTML fragment** back. Only the status code differs.
+Both buttons get **the same fragment** back (the same `<div id="status-result">` component). Only the status code differs; the number inside the text just echoes it.
 
 **Try it:** click **Respond 422**. Nothing changes. The Network tab shows the response body containing the HTML, and the console shows `Failed to load resource: … 422`. Now click **Respond 200**, and the fragment is swapped in.
 
@@ -116,7 +116,7 @@ Both buttons get **exactly the same HTML fragment** back. Only the status code d
 
 ## Break it
 
-Each exercise changes **one thing** in [`src/demos/02-actions.tsx`](../src/demos/02-actions.tsx). Refresh the browser after saving. Undo each change before starting the next one.
+Each exercise changes **one thing** in [`src/demos/02-actions.tsx`](../src/demos/02-actions.tsx) (#5 copies markup into Lesson 1's `src/demos/01-signals.tsx`). Refresh the browser after saving. Undo each change before starting the next one.
 
 1. **Lose the target.** In `ContactView`, change `id="contact"` to `id="contact-view"`, refresh, and click **Edit**. → Nothing happens. The console warns `PatchElementsNoTargetsFound`: the edit form's `#contact` has nowhere to go.
 2. **Put the indicator on the wrong element.** Move `data-indicator="contactSaving"` from the `<form>` to the Save `<button>`. → Saving never shows "Saving…" and the button never disables. `data-indicator` only tracks requests started by **its own element's** `data-on:*`, and here that's the form's submit.

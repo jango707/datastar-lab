@@ -23,7 +23,7 @@ Datastar is a **loop between the browser and your server**. There's no client-si
  ④ Datastar ◀──── events (HTML, signals) ─── ③ the response
 ```
 
-The page draws exactly this loop as four boxes joined by pixel arrows. When you press **Send**, the box that's currently active lights up, and every panel fills with the **real** data from that step, not a mock-up.
+The page draws this loop as four boxes joined by three pixel arrows (① → ② → ③ → ④; the way back to ① is you pressing **Send** again). When you press **Send**, the box that's currently active lights up, and every panel fills with the **real** data from that step, not a mock-up.
 
 ## Before you start
 
@@ -42,7 +42,7 @@ Look at box ①. The panel **"What Datastar will send"** is live. Type in **Your
 
 ## Step 2 — Press "Send with @post" and watch box ②
 
-The arrow lights up, then box ② fills with the request **exactly as the server's handler saw it**:
+Box ② fills with the request **exactly as the server's handler saw it**, and lights up together with the arrow leading into it:
 
 ```text
 POST /lessons/under-the-hood/echo
@@ -121,7 +121,7 @@ Datastar reads the stream through `fetch()`, not `EventSource`, so it can use an
 <details>
 <summary>Which signals travel to the server?</summary>
 
-All of them except names starting with `_`. On GET they go in `?datastar=`; otherwise in the JSON body.
+All of them except names starting with `_`. On GET (and DELETE) they go in `?datastar=`; on POST, PUT and PATCH they go in the JSON body.
 </details>
 
 <details>
