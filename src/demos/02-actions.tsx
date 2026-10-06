@@ -12,7 +12,7 @@ import { lesson } from './index';
  * Datastar finds the element with that id on the page and morphs it in place.
  * No SSE, no JSON API, no client-side templates. Walkthrough: lessons/02-actions.md
  *
- * POST handlers sleep a little so you can SEE the in-flight state.
+ * The contact and validate POST handlers sleep SLOW_MS so you can SEE the in-flight state.
  */
 
 const meta = lesson('actions');
@@ -191,7 +191,7 @@ const CODE: Record<string, Snippet[]> = {
       code: `
         actionsDemo.post('/status/:code', (c) => {
           const status = c.req.param('code') === '422' ? 422 : 200;
-          return c.html(<StatusResult status={status} />, status); // same HTML, different status
+          return c.html(<StatusResult status={status} />, status); // same fragment, different status
         });`,
       marks: ['422 : 200', ', status)'],
     },
@@ -267,7 +267,7 @@ actionsDemo.get('/', (c) =>
         id="status"
         code={CODE.status}
         title="3. Break it: 200 vs 422"
-        shows="Both buttons get the SAME fragment back. Only the status code differs."
+        shows="Both buttons get the same fragment back (same id, same component). Only the status code differs."
       >
         <div class="row">
           <button data-on:click={`@post('${BASE}/status/200')`}>Respond 200</button>

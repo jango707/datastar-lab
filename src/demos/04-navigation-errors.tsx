@@ -130,7 +130,7 @@ navigationErrorsDemo.get('/', (c) => {
         id="errors"
         code={CODE.errors}
         title="2. Errors you can see"
-        shows="Both buttons hit a route that throws. One returns a 500 (Datastar ignores it); the other goes through the app's error handler, which answers 200 with a toast."
+        shows="Both buttons hit a route that fails. One answers 500 itself (Datastar ignores it); the other throws, and the app's error handler answers 200 with a toast."
       >
         <div class="split" data-signals={signals({ naiveBusy: false, handledBusy: false })}>
           <div class="stack">
@@ -215,7 +215,7 @@ navigationErrorsDemo.post('/explode/naive', async (c) => {
   return c.json({ error: 'The risky thing failed' }, 500);
 });
 
-navigationErrorsDemo.post('/explode/handled', async () => {
+navigationErrorsDemo.post('/explode/handled', async (c) => { // c unused; kept so Break it #2 can `return c.json(…)`
   await sleep(400);
   throw new Error('the risky thing failed');
 });
