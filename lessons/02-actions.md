@@ -161,4 +161,4 @@ On the `<form>`, because its `data-on:submit` is what starts the request.
 
 ---
 
-**Next:** Lesson 3 — Server reads signals *(coming soon)*. The server streams patches back over SSE, including patches to signals.
+**Next:** [Lesson 3 — Server reads signals](03-server-signals.md). The server streams patches back over SSE, including patches to signals.

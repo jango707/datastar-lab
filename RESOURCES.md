@@ -15,17 +15,17 @@ Read these in order. Each one is short.
 
 | Page | Pairs with |
 |---|---|
-| [Getting started](https://data-star.dev/guide/getting_started) | README |
+| [Getting started](https://data-star.dev/guide/getting_started) | Lesson 0 |
 | [Reactive signals](https://data-star.dev/guide/reactive_signals) | Lesson 1 |
 | [Datastar expressions](https://data-star.dev/guide/datastar_expressions) | Lesson 1 |
-| [Backend requests](https://data-star.dev/guide/backend_requests) | Lessons 2–5 |
+| [Backend requests](https://data-star.dev/guide/backend_requests) | Lessons 0, 2–6 |
 | [The Tao of Datastar](https://data-star.dev/guide/the_tao_of_datastar) | After Lesson 2, when the "server owns the HTML" idea has clicked |
 
 ### Look things up: the reference
 
 | Page | What's in it |
 |---|---|
-| [Attributes](https://data-star.dev/reference/attributes) | Every `data-*` attribute, its modifiers, [attribute casing](https://data-star.dev/reference/attributes#attribute-casing) and [evaluation order](https://data-star.dev/reference/attributes#attribute-evaluation-order) |
+| [Attributes](https://data-star.dev/reference/attributes) | Every `data-*` attribute, its modifiers, [attribute casing](https://data-star.dev/reference/attributes#attribute-casing) and [evaluation order](https://data-star.dev/reference/attributes#attribute-evaluation-order). Used beyond Lesson 1: [`data-on-interval`](https://data-star.dev/reference/attributes#data-on-interval) and [`data-init`](https://data-star.dev/reference/attributes#data-init) (L6), [`data-style`](https://data-star.dev/reference/attributes#data-style) (L5), [`data-on-signal-patch`](https://data-star.dev/reference/attributes#data-on-signal-patch) (L0) |
 | [Actions](https://data-star.dev/reference/actions) | `@get`/`@post`/…, [options](https://data-star.dev/reference/actions#options), [response handling](https://data-star.dev/reference/actions#response-handling), [request cancellation](https://data-star.dev/reference/actions#request-cancellation) |
 | [SSE events](https://data-star.dev/reference/sse_events) | The wire format: [`datastar-patch-elements`](https://data-star.dev/reference/sse_events#datastar-patch-elements) and [`datastar-patch-signals`](https://data-star.dev/reference/sse_events#datastar-patch-signals) |
 | [SDKs](https://data-star.dev/reference/sdks) | Server SDKs for every language, including the TypeScript one used here |
@@ -56,7 +56,7 @@ The console errors link straight to an explanation page, for example:
 
 | Tool | Read |
 |---|---|
-| **Hono** (server + routing) | [Docs home](https://hono.dev/docs/) · [Hono on Bun](https://hono.dev/docs/getting-started/bun) · [Request API, including `parseBody`](https://hono.dev/docs/api/request) |
+| **Hono** (server + routing) | [Docs home](https://hono.dev/docs/) · [Hono on Bun](https://hono.dev/docs/getting-started/bun) · [Request API, including `parseBody`](https://hono.dev/docs/api/request) · [Error handling (`app.onError`)](https://hono.dev/docs/api/hono#error-handling) |
 | **Hono JSX** (server-rendered HTML) | [JSX guide](https://hono.dev/docs/guides/jsx) · [JSX Renderer middleware](https://hono.dev/docs/middleware/builtin/jsx-renderer) (what `c.render` uses) |
 | **Bun** (runtime) | [Docs](https://bun.com/docs) · [Installation](https://bun.com/docs/installation) |
 

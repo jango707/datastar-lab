@@ -156,7 +156,7 @@ data-class="{'gc-accent': $gcPicked, 'gc-muted': !$gcPicked}"
 Each exercise changes **one thing** in [`src/demos/01-signals.tsx`](../src/demos/01-signals.tsx). The server reloads itself (`bun --hot`); just refresh the browser. Undo each change before starting the next one.
 
 1. **The flash.** Delete `style="display:none"` from the toggle panel. In DevTools → Network, set throttling to *Slow 4G* and hard-reload. → The panel appears briefly, then disappears when Datastar loads.
-2. **Typos fail silently.** Change the counter's `data-text="$count"` to `data-text="$conut"`. → The number goes blank and **there's no error**. An unknown signal just reads as empty. When something's blank, check the inspector first.
+2. **Typos fail silently.** Change the counter's `data-text="$count"` to `data-text="$conut"`. → The number goes blank and **there's no error**. Worse, the inspector now shows a brand-new `"conut": ""`: reading a missing signal *creates* it as an empty string (and it'll be sent to the server from now on). When something's blank, check the inspector first.
 3. **The ARIA trap.** Change the toggle to `data-attr:aria-expanded="$open"`. → When closed, the attribute is **missing**. When open, it's `aria-expanded=""`. Neither is valid ARIA.
 4. **Strings join, numbers add.** Add `<p data-text="$qty + $price"></p>` to the totals demo and change Quantity to 3. → You get `18`. Now change the signals to `signals({ qty: '2', price: '15' })` and do it again. → You get `315`.
 5. **Key and value.** Change the Broken input's `data-bind:userName=""` back to `data-bind:userName` (no value). → The console shows `KeyAndValueProvided`.

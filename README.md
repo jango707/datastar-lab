@@ -28,29 +28,32 @@ bun install
 bun run dev
 ```
 
-Then open **<http://localhost:4321>**. The server reloads itself when you save a file; just refresh the browser.
+Then open **<http://localhost:4321>**, which starts at Lesson 0. The server reloads itself when you save a file; just refresh the browser.
 
 ```bash
 bun run typecheck   # type-check everything
 ```
 
+**Troubleshooting:** if requests start hanging or streams behave strangely after a lot of saving, stop `bun run dev` and start it again. Hot reloading and long-lived streams (Lessons 5–6) don't always mix.
+
 ---
 
 ## Lessons
 
-| # | Lesson | Walkthrough | Status |
-|---|---|---|---|
-| 1 | Signals (no server) | [lessons/01-signals.md](lessons/01-signals.md) | ✅ ready |
-| 2 | Actions + swap by id | [lessons/02-actions.md](lessons/02-actions.md) | ✅ ready |
-| 3 | Server reads signals: active search, `patchSignals` over SSE | — | 🔜 planned |
-| 4 | Navigation, errors, double-submit | — | 🔜 planned |
-| 5 | Streaming: a token-by-token chat over SSE | — | 🔜 planned |
-| 6 | Live updates: polling vs push, keepalives | — | 🔜 planned |
-| 7 | Where Datastar stops (and plain JavaScript takes over) | — | 🔜 planned |
+| # | Lesson | Walkthrough |
+|---|---|---|
+| 0 | **Under the hood**: one full round trip, drawn live with arrows | [lessons/00-under-the-hood.md](lessons/00-under-the-hood.md) |
+| 1 | Signals (no server) | [lessons/01-signals.md](lessons/01-signals.md) |
+| 2 | Actions + swap by id | [lessons/02-actions.md](lessons/02-actions.md) |
+| 3 | Server reads signals: SSE, active search, patch modes | [lessons/03-server-signals.md](lessons/03-server-signals.md) |
+| 4 | Navigation, errors, double-submit | [lessons/04-navigation-errors.md](lessons/04-navigation-errors.md) |
+| 5 | Streaming: a word-by-word chat, a progress stream | [lessons/05-streaming.md](lessons/05-streaming.md) |
+| 6 | Live updates: polling vs push, a room shared across tabs, heartbeats | [lessons/06-live.md](lessons/06-live.md) |
+| 7 | Where Datastar stops: expressions vs programs, a pixel-paint island | [lessons/07-islands.md](lessons/07-islands.md) |
 
 ### How to do a lesson
 
-1. **Open the lesson page** in the browser. Every page has live demos plus a **Live signals** panel showing the page's state as JSON.
+1. **Open the lesson page** in the browser. Every demo has a **Code** panel underneath it, a short excerpt with the important parts highlighted, and every page has a **Live signals** panel showing the page's state as JSON.
 2. **Follow the walkthrough** in [`lessons/`](lessons/). It goes step by step: what to click, what each attribute does, and what to notice.
 3. **Break it.** Each walkthrough ends with exercises that change one thing in `src/demos/NN-*.tsx` and tell you what you should see.
 4. **Check yourself** with the short questions at the end of each walkthrough.
@@ -80,11 +83,13 @@ RESOURCES.md       👤 official docs and further reading
 src/
   server.tsx       Hono app: static files + one sub-app per lesson
   layout.tsx       page shell: lesson nav, the Datastar <script>, Live signals panel
-  components.tsx   lesson heading + demo card
-  demos/           the code behind each lesson page (01-signals.tsx, …)
+  components.tsx   lesson heading, demo card, Code panels
+  demos/           the code behind each lesson page (00-under-the-hood.tsx, …)
+  islands/         Lesson 7's client-side TypeScript, served as /islands/*.js
   lib/signals.ts   safe JSON for data-signals attributes
+  lib/datastar.tsx server helpers: toHtml, dsRedirect, dsError (toasts)
 public/
-  lab.css          plain CSS, no framework, so the focus stays on Datastar
+  lab.css          plain-CSS pixel-art theme (no framework, no rounded corners)
   vendor/          the unmodified Datastar 1.0.2 client
 AGENTS.md          🤖 instructions for AI coding agents
 CLAUDE.md          🤖 Claude Code entry point (imports AGENTS.md)
@@ -99,4 +104,5 @@ Start with [RESOURCES.md](RESOURCES.md). The short version: the official [guide]
 
 ## Credits
 
-`public/vendor/datastar-1.0.2.js` is the unmodified Datastar v1.0.2 client from [starfederation/datastar](https://github.com/starfederation/datastar), MIT licensed. The server SDK is [`@starfederation/datastar-sdk`](https://github.com/starfederation/datastar-typescript), also MIT.
+- `public/vendor/datastar-1.0.2.js` is the unmodified Datastar v1.0.2 client from [starfederation/datastar](https://github.com/starfederation/datastar), MIT licensed. The server SDK is [`@starfederation/datastar-sdk`](https://github.com/starfederation/datastar-typescript), also MIT.
+- Pixel fonts: [Press Start 2P](https://github.com/fontsource/font-files/tree/main/fonts/google/press-start-2p) and [VT323](https://github.com/fontsource/font-files/tree/main/fonts/google/vt323), both SIL Open Font License 1.1, installed from npm via Fontsource and served locally.
